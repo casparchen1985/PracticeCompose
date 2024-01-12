@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,18 +29,61 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
+    private val boxHeight = 200.dp
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val painter = painterResource(id = R.drawable.thibautpinot)
-            val contentDes = "This is Thibaut Pinot"
-            val title = "This is Thibaut Pinot"
-            Box(
+            val thibautPainter = painterResource(id = R.drawable.thibautpinot)
+            val chrisPainter = painterResource(id = R.drawable.chris_froome)
+            val thibaut = resources.getString(R.string.thibaut_pinot)
+            val chris = resources.getString(R.string.chris_froome)
+            val paddingDP = 5.dp
+            val firstItemPercentage = 0.5f
+
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .padding(10.dp)
+                    .fillMaxSize()
+                    .background(Color.DarkGray),
             ) {
-                ImageCard(painter = painter, contentDescription = contentDes, title = title)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(paddingDP, paddingDP, paddingDP, 0.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(firstItemPercentage)
+                            .padding(0.dp, 0.dp, paddingDP, 0.dp)
+                    ) {
+                        ImageCard(painter = thibautPainter, contentDescription = thibaut, title = thibaut)
+                    }
+                    Box(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        ImageCard(painter = chrisPainter, contentDescription = chris, title = chris)
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(paddingDP, paddingDP, paddingDP, 0.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(firstItemPercentage)
+                            .padding(0.dp, 0.dp, paddingDP, 0.dp)
+                    ) {
+                        ImageCard(painter = chrisPainter, contentDescription = chris, title = chris)
+                    }
+
+                    Box(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        ImageCard(painter = thibautPainter, contentDescription = thibaut, title = thibaut)
+                    }
+                }
             }
         }
     }
@@ -59,12 +104,14 @@ fun ImageCard(
         Box(
             modifier = Modifier.height(200.dp),
         ) {
+            // bottom/background image
             Image(
                 painter = painter,
                 contentDescription = contentDescription,
                 contentScale = ContentScale.Crop
             )
 
+            // gradient layer
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -78,6 +125,7 @@ fun ImageCard(
 
             }
 
+            // text layer
             Box(
                 modifier = Modifier
                     .fillMaxSize()
